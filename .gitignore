@@ -1,5 +1,7 @@
-/build/
+.cmake_build
 CMakeLists.txt.user
+*.pui
+
 # Prerequisites
 *.d
 
