@@ -64,6 +64,6 @@ repos:
     -   id: cppcheck
         args:
         -   --suppress=*:*moc_*
-#    -   id: clang-tidy
+    -   id: clang-tidy
 #include-what-you-use
     -   id: lizard

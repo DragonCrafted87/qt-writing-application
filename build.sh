@@ -1,64 +1,43 @@
 #!/bin/bash
 
-clear
-
 saved_directory="$PWD"
 script_directory="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source_directory="$script_directory/src"
 
-cd "$script_directory" || exit
-mkdir -p .cmake_build/debug
-mkdir -p .cmake_build/release
-mkdir -p .cmake_build/release_min_size
 
-/d/Applications/Qt/Tools/CMake_64/bin/cmake.exe \
-    -S "$source_directory" \
-    -B "$script_directory"/.cmake_build/debug \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=Debug \
-    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-    -DCMAKE_PROJECT_INCLUDE_BEFORE:PATH=D:/Applications/Qt/Tools/QtCreator/share/qtcreator/package-manager/auto-setup.cmake \
-    -DQT_QMAKE_EXECUTABLE=D:/Applications/Qt/6.2.1/mingw81_64/bin/qmake.exe \
-    -DCMAKE_PREFIX_PATH=D:/Applications/Qt/6.2.1/mingw81_64 \
-    -DCMAKE_C_COMPILER=D:/Applications/Qt/Tools/mingw810_64/bin/gcc.exe \
-    -DCMAKE_CXX_COMPILER=D:/Applications/Qt/Tools/mingw810_64/bin/g++.exe
+function base-build ()
+{
+    build_path="$1"
+    build_type="$2"
 
-cp "$script_directory"/.cmake_build/debug/compile_commands.json "$script_directory"/.cmake_build/
+    cd "$script_directory"/.cmake_build/"$build_path" || exit
+    cmake \
+        -S "$source_directory" \
+        -GNinja \
+        -DCMAKE_BUILD_TYPE="$build_type" \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 
-/d/Applications/Qt/Tools/CMake_64/bin/cmake.exe \
-    --build "$script_directory"/.cmake_build/debug \
-    --config Debug
+    cmake \
+        --build "$script_directory"/.cmake_build/"$build_path" \
+        --config "$build_type"
+}
 
-/d/Applications/Qt/Tools/CMake_64/bin/cmake.exe \
-    -S "$source_directory" \
-    -B "$script_directory"/.cmake_build/release \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-    -DCMAKE_PROJECT_INCLUDE_BEFORE:PATH=D:/Applications/Qt/Tools/QtCreator/share/qtcreator/package-manager/auto-setup.cmake \
-    -DQT_QMAKE_EXECUTABLE=D:/Applications/Qt/6.2.1/mingw81_64/bin/qmake.exe \
-    -DCMAKE_PREFIX_PATH=D:/Applications/Qt/6.2.1/mingw81_64 \
-    -DCMAKE_C_COMPILER=D:/Applications/Qt/Tools/mingw810_64/bin/gcc.exe \
-    -DCMAKE_CXX_COMPILER=D:/Applications/Qt/Tools/mingw810_64/bin/g++.exe
+function release-build ()
+{
+    base-build "release" "Release"
+}
 
-/d/Applications/Qt/Tools/CMake_64/bin/cmake.exe \
-    --build "$script_directory"/.cmake_build/release \
-    --config Release
+function debug-build ()
+{
+    base-build "debug" "Debug"
 
-/d/Applications/Qt/Tools/CMake_64/bin/cmake.exe \
-    -S "$source_directory" \
-    -B "$script_directory"/.cmake_build/release_min_size \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=MinSizeRel \
-    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-    -DCMAKE_PROJECT_INCLUDE_BEFORE:PATH=D:/Applications/Qt/Tools/QtCreator/share/qtcreator/package-manager/auto-setup.cmake \
-    -DQT_QMAKE_EXECUTABLE=D:/Applications/Qt/6.2.1/mingw81_64/bin/qmake.exe \
-    -DCMAKE_PREFIX_PATH=D:/Applications/Qt/6.2.1/mingw81_64 \
-    -DCMAKE_C_COMPILER=D:/Applications/Qt/Tools/mingw810_64/bin/gcc.exe \
-    -DCMAKE_CXX_COMPILER=D:/Applications/Qt/Tools/mingw810_64/bin/g++.exe
+    cd "$script_directory"/.cmake_build/debug/bin || exit
+    cp /c/scoop/apps/llvm-mingw/current/x86_64-w64-mingw32/bin/libc++.dll .
+    cp /c/scoop/apps/llvm-mingw/current/x86_64-w64-mingw32/bin/libunwind.dll .
+    /c/qt-build/debug/qtbase/bin/windeployqt.exe src.exe
+}
 
-/d/Applications/Qt/Tools/CMake_64/bin/cmake.exe \
-    --build "$script_directory"/.cmake_build/release_min_size \
-    --config MinSizeRel
+debug-build
+#release-build
 
 cd "$saved_directory" || exit
