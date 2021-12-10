@@ -1,43 +1,72 @@
 #!/bin/bash
 
-saved_directory="$PWD"
+set -e
+
 script_directory="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-source_directory="$script_directory/src"
 
+while getopts cdrx flag
+do
+    case "${flag}" in
+        c) CLEAN=True;;
+        d) DEBUG=True;;
+        r) RELEASE=True;;
+        x) EXECUTE=True;;
+        *) ;;
+    esac
+done
 
-function base-build ()
+function configure-and-build ()
 {
     build_path="$1"
     build_type="$2"
 
-    cd "$script_directory"/.cmake_build/"$build_path" || exit
-    cmake \
-        -S "$source_directory" \
-        -GNinja \
-        -DCMAKE_BUILD_TYPE="$build_type" \
-        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    mkdir -p  "$script_directory"/.cmake_build/"$build_path"/bin
+    pushd "$script_directory"/.cmake_build/"$build_path"
+
+    if [ "$CLEAN" ]; then
+        cmake --build . --target clean
+    fi
 
     cmake \
-        --build "$script_directory"/.cmake_build/"$build_path" \
-        --config "$build_type"
+        -S "$script_directory" \
+        -GNinja \
+        -DCMAKE_BUILD_TYPE="$build_type" \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+        -DCMAKE_C_COMPILER=x86_64-w64-mingw32-clang \
+        -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-clang++ \
+        "${@:3}"
+
+    cmake \
+        --build . \
+        --parallel "$(nproc)"
+
+    if [ "$EXECUTE" ]; then
+        bin/src.exe
+    fi
+
+    popd
 }
 
 function release-build ()
 {
-    base-build "release" "Release"
+    configure-and-build \
+        "release" \
+        "Release" \
+        "-DCMAKE_TOOLCHAIN_FILE=/clang64/qt6-static/lib/cmake/Qt6/qt.toolchain.cmake"
 }
 
 function debug-build ()
 {
-    base-build "debug" "Debug"
-
-    cd "$script_directory"/.cmake_build/debug/bin || exit
-    cp /c/scoop/apps/llvm-mingw/current/x86_64-w64-mingw32/bin/libc++.dll .
-    cp /c/scoop/apps/llvm-mingw/current/x86_64-w64-mingw32/bin/libunwind.dll .
-    /c/qt-build/debug/qtbase/bin/windeployqt.exe src.exe
+    configure-and-build \
+        "debug" \
+        "Debug" \
+        "-DCMAKE_TOOLCHAIN_FILE=/clang64/lib/cmake/Qt6/qt.toolchain.cmake"
 }
 
-debug-build
-#release-build
+if [ "$DEBUG" ]; then
+    debug-build
+fi
 
-cd "$saved_directory" || exit
+if [ "$RELEASE" ]; then
+    release-build
+fi

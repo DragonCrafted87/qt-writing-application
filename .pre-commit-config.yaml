@@ -61,9 +61,4 @@ repos:
     -   id: clang-format
         args:
         -   -i
-    -   id: cppcheck
-        args:
-        -   --suppress=*:*moc_*
-    -   id: clang-tidy
-#include-what-you-use
     -   id: lizard

@@ -36,11 +36,19 @@
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget">
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Chapter Browser</string>
+   </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
@@ -68,13 +76,13 @@
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open....</string>
+    <string>Open...</string>
    </property>
    <property name="iconText">
-    <string>Open....</string>
+    <string>Open...</string>
    </property>
    <property name="toolTip">
-    <string>Open....</string>
+    <string>Open...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -86,6 +94,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+F4</string>
    </property>
   </action>
  </widget>

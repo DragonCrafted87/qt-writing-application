@@ -1,0 +1,28 @@
+Checks: >
+    -*,
+    boost-*,
+    bugprone-*,
+    cert-*,
+    clang-analyzer-*,
+    clang-diagnostic-*,
+    concurrency-*,
+    cppcoreguidelines-*,
+    hicpp-*,
+    misc-*,
+    modernize-*,
+    mpi-*,
+    openmp-*,
+    performance-*,
+    portability-*,
+    readability-*
+WarningsAsErrors: >
+    *,
+    -bugprone-suspicious-include
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+FormatStyle: none
+CheckOptions:
+-   key: readability-implicit-bool-conversion.AllowIntegerConditions
+    value: 'true'
+-   key: readability-implicit-bool-conversion.AllowPointerConditions
+    value: 'true'

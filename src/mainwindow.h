@@ -19,7 +19,14 @@ public:
     MainWindow(QWidget * parent = nullptr);
     ~MainWindow();
 
+private slots:
+    static void newDocument();
+    static void openDocument();
+    static void saveDocument();
+
 private:
+    void closeEvent(QCloseEvent * event);
+
     Ui::MainWindow * ui;
 };
 #endif
