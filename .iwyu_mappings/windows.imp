@@ -1,0 +1,14 @@
+[
+  {"include": ["<winbase.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<wincon.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<windef.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winerror.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<wingdi.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winnetwk.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winnls.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winnt.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winreg.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winsvc.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winuser.h>", "private", "<windows.h>", "public"]},
+  {"include": ["<winver.h>", "private", "<windows.h>", "public"]},
+]

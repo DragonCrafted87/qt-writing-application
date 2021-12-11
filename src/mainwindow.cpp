@@ -1,8 +1,12 @@
 #include "mainwindow.h"
 
+#include <QAction>
 #include <QCloseEvent>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QMessageBox>
+#include <Qt>
+#include <QtGlobal>
 
 #include "res/ui/ui_mainwindow.h"
 

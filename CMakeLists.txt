@@ -20,18 +20,27 @@ set(CMAKE_EXE_LINKER_FLAGS " -fuse-ld=lld")
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
     set(BUILD_SHARED_LIBS ON)
     set(CMAKE_SHARED_LIBRARY_SUFFIX "dll.a")
-
 ELSE()
-
     set(CMAKE_STATIC_LIBRARY_SUFFIX MATCHES "^((?!dll).)*$")
     set(BUILD_SHARED_LIBS OFF)
     set(CMAKE_EXE_LINKER_FLAGS " -static")
     set(LinkType Static)
-
 ENDIF()
 
 set(CMAKE_C_CLANG_TIDY clang-tidy)
 set(CMAKE_CXX_CLANG_TIDY clang-tidy)
+
+find_program(iwyu_path NAMES include-what-you-use iwyu REQUIRED)
+set(iwyu_path_and_options
+    ${iwyu_path}
+    -Xiwyu
+    --no_comments
+    -Xiwyu
+    --mapping_file=${CMAKE_CURRENT_LIST_DIR}/.iwyu_mappings/main.imp
+)
+
+
+set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE ${iwyu_path_and_options})
 
 add_compile_definitions(APPLICATION_NAME="${PROJECT_NAME}")
 add_compile_definitions(APPLICATION_VERSION="${PROJECT_VERSION}")

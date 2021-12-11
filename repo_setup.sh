@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+set -e
 
 # install mysys2
 
@@ -21,6 +21,28 @@ pacman -S \
 
 pip install lizard
 pip install pre-commit
+
+
+
+pushd tmp
+curl -L https://api.github.com/repos/include-what-you-use/include-what-you-use/tarball/refs/tags/0.17 --output iwyu.tar.gz
+mkdir iwyu
+bsdtar -xvf iwyu.tar.gz -C iwyu --strip-components 1
+rm iwyu.tar.gz
+pushd iwyu
+mkdir build
+pushd build
+
+cmake  \
+    -S .. \
+    -GNinja \
+    -Wno-dev \
+    -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-clang++ \
+    -DCMAKE_C_COMPILER=x86_64-w64-mingw32-clang \
+    -DCMAKE_INSTALL_PREFIX=/clang64/
+
+cmake --build . --parallel "$(nproc)"
+cmake --install .
 
 
 #

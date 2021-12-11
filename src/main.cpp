@@ -1,8 +1,11 @@
 
-#include <array>
-#include <windows.h>
+#include <cstdio>
+#ifdef _WIN32
+#    include <windows.h>
+#endif
 
 #include <QApplication>
+#include <QWidgetList>
 
 #include "mainwindow.h"
 

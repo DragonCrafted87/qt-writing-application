@@ -31,7 +31,6 @@ function configure-and-build ()
         -S "$script_directory" \
         -GNinja \
         -DCMAKE_BUILD_TYPE="$build_type" \
-        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
         -DCMAKE_C_COMPILER=x86_64-w64-mingw32-clang \
         -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-clang++ \
         "${@:3}"

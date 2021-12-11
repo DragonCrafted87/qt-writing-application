@@ -1,8 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QConstOverload>
 #include <QMainWindow>
 #include <QObject>
+
+class QCloseEvent;
+class QWidget;
 
 QT_BEGIN_NAMESPACE
 namespace Ui
