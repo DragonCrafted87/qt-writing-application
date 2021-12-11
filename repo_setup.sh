@@ -20,6 +20,8 @@ pacman -S \
     mingw-w64-clang-x86_64-toolchain \
 
 pip install lizard
+pip install pre-commit
+
 
 #
 #    git clone https:

@@ -1,8 +1,10 @@
-#include "mainwindow.h"
 
 #include <array>
-#include <QApplication>
 #include <windows.h>
+
+#include <QApplication>
+
+#include "mainwindow.h"
 
 auto main(int argc, char ** argv) -> int
 {

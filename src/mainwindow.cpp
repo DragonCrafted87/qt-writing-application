@@ -1,19 +1,16 @@
 #include "mainwindow.h"
 
-#include "res/ui/ui_mainwindow.h"
-
 #include <QCloseEvent>
 #include <QDebug>
 #include <QMessageBox>
+
+#include "res/ui/ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
-
     qDebug() << "Starting up" << APPLICATION_NAME << APPLICATION_VERSION;
-
-
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newDocument);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openDocument);
@@ -46,7 +43,7 @@ void MainWindow::saveDocument()
 void MainWindow::closeEvent(QCloseEvent * event)
 {
     QMessageBox::StandardButton resBtn = QMessageBox::question(
-        this, APPLICATION_NAME, tr("Are you sure?\n"), QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
+        this, tr("Exit Confirmation"), tr("Are you sure?"), QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
 
     if (resBtn != QMessageBox::Yes)
     {
