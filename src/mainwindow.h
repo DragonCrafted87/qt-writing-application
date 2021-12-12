@@ -1,8 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QConstOverload>
 #include <QMainWindow>
 #include <QObject>
+
+class QCloseEvent;
+class QWidget;
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -19,7 +23,14 @@ public:
     MainWindow(QWidget * parent = nullptr);
     ~MainWindow();
 
+private slots:
+    static void newDocument();
+    static void openDocument();
+    static void saveDocument();
+
 private:
+    void closeEvent(QCloseEvent * event);
+
     Ui::MainWindow * ui;
 };
 #endif

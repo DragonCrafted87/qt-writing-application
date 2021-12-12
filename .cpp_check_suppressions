@@ -1,0 +1,6 @@
+*:*/src_autogen/*
+unmatchedSuppression:*
+missingIncludeSystem:*
+unusedFunction:*/src/mainwindow.cpp:47
+ignoredReturnValue:*/src/main.cpp:17
+ignoredReturnValue:*/src/main.cpp:18
