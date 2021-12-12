@@ -27,8 +27,20 @@ ELSE()
     set(LinkType Static)
 ENDIF()
 
-set(CMAKE_C_CLANG_TIDY clang-tidy)
+# Setup Static Analyzers
 set(CMAKE_CXX_CLANG_TIDY clang-tidy)
+find_program(cppcheck_path NAMES cppcheck REQUIRED)
+cmake_path(GET cppcheck_path PARENT_PATH cpp_check_root_Path)
+set(cppcheck_path_and_options
+    ${cppcheck_path}
+    --enable=all
+    --force
+    --library=qt
+    --quiet
+    --std=c++14
+    --suppressions-list=${CMAKE_CURRENT_LIST_DIR}/.cpp_check_suppressions
+)
+set(CMAKE_CXX_CPPCHECK ${cppcheck_path_and_options})
 
 find_program(iwyu_path NAMES include-what-you-use iwyu REQUIRED)
 set(iwyu_path_and_options
@@ -38,8 +50,6 @@ set(iwyu_path_and_options
     -Xiwyu
     --mapping_file=${CMAKE_CURRENT_LIST_DIR}/.iwyu_mappings/main.imp
 )
-
-
 set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE ${iwyu_path_and_options})
 
 add_compile_definitions(APPLICATION_NAME="${PROJECT_NAME}")

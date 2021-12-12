@@ -9,12 +9,12 @@ pacman -Su
 pacman -S \
     --needed \
     base-devel \
+    python-pip \
     git \
     mingw-w64-clang-x86_64-boost\
     mingw-w64-clang-x86_64-cmake \
     mingw-w64-clang-x86_64-cppcheck \
     mingw-w64-clang-x86_64-ninja \
-    mingw-w64-clang-x86_64-python-pip \
     mingw-w64-clang-x86_64-qt6-debug \
     mingw-w64-clang-x86_64-qt6-static \
     mingw-w64-clang-x86_64-toolchain \
@@ -24,7 +24,7 @@ pip install pre-commit
 
 
 
-pushd tmp
+pushd /tmp
 curl -L https://api.github.com/repos/include-what-you-use/include-what-you-use/tarball/refs/tags/0.17 --output iwyu.tar.gz
 mkdir iwyu
 bsdtar -xvf iwyu.tar.gz -C iwyu --strip-components 1
