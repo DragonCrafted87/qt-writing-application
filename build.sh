@@ -4,12 +4,13 @@ set -e
 
 script_directory="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-while getopts cdrx flag
+while getopts cdrsx flag
 do
     case "${flag}" in
         c) CLEAN=True;;
         d) DEBUG=True;;
         r) RELEASE=True;;
+        s) STATIC_ANALYSIS=True;;
         x) EXECUTE=True;;
         *) ;;
     esac
@@ -23,7 +24,13 @@ function configure-and-build ()
     mkdir -p  "$script_directory"/.cmake_build/"$build_path"/bin
     pushd "$script_directory"/.cmake_build/"$build_path"
 
-    if [ "$CLEAN" ]; then
+    CMAKE_FLAGS=("${@:3}")
+
+    if [[ -n "$STATIC_ANALYSIS" ]]; then
+        CMAKE_FLAGS+=("-DENABLE_STATIC_ANALYSIS=ON")
+    fi
+
+    if [[ -n "$CLEAN" || -n "$STATIC_ANALYSIS" ]]; then
         cmake --build . --target clean
     fi
 
@@ -33,14 +40,14 @@ function configure-and-build ()
         -DCMAKE_BUILD_TYPE="$build_type" \
         -DCMAKE_C_COMPILER=x86_64-w64-mingw32-clang \
         -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-clang++ \
-        "${@:3}"
+        "${CMAKE_FLAGS[@]}"
 
     cmake \
         --build . \
         --parallel "$(nproc)"
 
     if [ "$EXECUTE" ]; then
-        bin/src.exe
+        bin/main.exe
     fi
 
     popd
@@ -62,10 +69,10 @@ function debug-build ()
         "-DCMAKE_TOOLCHAIN_FILE=/clang64/lib/cmake/Qt6/qt.toolchain.cmake"
 }
 
-if [ "$DEBUG" ]; then
+if [[ -n "$DEBUG" ]]; then
     debug-build
 fi
 
-if [ "$RELEASE" ]; then
+if [[ -n "$RELEASE" ]]; then
     release-build
 fi

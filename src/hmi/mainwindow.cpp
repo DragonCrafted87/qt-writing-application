@@ -44,6 +44,7 @@ void MainWindow::saveDocument()
     qDebug() << "MainWindow::saveDocument";
 }
 
+// cppcheck-suppress unusedFunction
 void MainWindow::closeEvent(QCloseEvent * event)
 {
     QMessageBox::StandardButton resBtn = QMessageBox::question(

@@ -7,7 +7,7 @@
 #include <QApplication>
 #include <QWidgetList>
 
-#include "mainwindow.h"
+#include "hmi/mainwindow.h"
 
 auto main(int argc, char ** argv) -> int
 {
