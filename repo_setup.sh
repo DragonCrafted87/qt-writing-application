@@ -2,27 +2,31 @@
 
 set -e
 
-# install mysys2
 
-pacman -Syu
-pacman -Su
-pacman -S \
-    --needed \
-    base-devel \
-    python-pip \
-    git \
-    mingw-w64-clang-x86_64-boost\
-    mingw-w64-clang-x86_64-extra-cmake-modules \
-    mingw-w64-clang-x86_64-cppcheck \
-    mingw-w64-clang-x86_64-ninja \
-    mingw-w64-clang-x86_64-qt6-debug \
-    mingw-w64-clang-x86_64-qt6-static \
-    mingw-w64-clang-x86_64-toolchain \
+case "$OSTYPE" in
+    msys*)
+        pacman -Syu
+        pacman -Su
+        pacman -S \
+            --needed \
+            base-devel \
+            python-pip \
+            git \
+            mingw-w64-clang-x86_64-boost\
+            mingw-w64-clang-x86_64-extra-cmake-modules \
+            mingw-w64-clang-x86_64-cppcheck \
+            mingw-w64-clang-x86_64-ninja \
+            mingw-w64-clang-x86_64-qt6-debug \
+            mingw-w64-clang-x86_64-qt6-static \
+            mingw-w64-clang-x86_64-toolchain
+        ;;
+    *)
+        return
+        ;;
+esac
 
 pip install lizard
 pip install pre-commit
-
-
 
 pushd /tmp
 curl -L https://api.github.com/repos/include-what-you-use/include-what-you-use/tarball/refs/tags/0.17 --output iwyu.tar.gz
