@@ -17,6 +17,7 @@ repos:
         -   --autofix
         -   --indent
         -   '4'
+# YAML
 -   repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
     rev: v2.2.0
     hooks:
@@ -25,6 +26,11 @@ repos:
         -   --autofix
         -   --indent
         -   '4'
+-   repo: https://github.com/adrienverge/yamllint
+    rev: v1.26.3
+    hooks:
+    -   id: yamllint
+# MARKDOWN
 -   repo: https://github.com/executablebooks/mdformat
     rev: 0.7.11
     hooks:
@@ -35,14 +41,11 @@ repos:
         additional_dependencies:
         -   mdformat-gfm
         -   mdformat-black
--   repo: https://github.com/adrienverge/yamllint
-    rev: v1.26.3
-    hooks:
-    -   id: yamllint
 -   repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.30.0
     hooks:
     -   id: markdownlint
+# SHELL
 -   repo: https://github.com/lovesegfault/beautysh
     rev: v6.2.1
     hooks:
@@ -55,6 +58,7 @@ repos:
     rev: v0.8.0.1
     hooks:
     -   id: shellcheck
+# C | C++
 -   repo: https://github.com/Takishima/cmake-pre-commit-hooks
     rev: v1.5.2
     hooks:
@@ -62,6 +66,13 @@ repos:
         args:
         -   -i
     -   id: lizard
+# Spell Checker
+-   repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v5.6.11
+    hooks:
+    -   id: cspell
+        exclude: ^.iwyu_mappings/|^.clang|^.cpp|^.gitignore|^.pre-commit-config.yaml|.*fugue-icons.*|prj$|^.cspell
+# CMAKE
 -   repo: https://github.com/BlankSpruce/gersemi
     rev: 0.7.5
     hooks:
