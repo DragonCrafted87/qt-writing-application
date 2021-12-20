@@ -21,17 +21,17 @@ function configure-and-build ()
     build_path="$1"
     build_type="$2"
 
-    mkdir -p  "$script_directory"/.cmake_build/"$build_path"/bin
+    if [[ -n "$CLEAN" || -n "$STATIC_ANALYSIS" ]]; then
+        rm -rf "$script_directory"/.cmake_build/"$build_path"/*
+    fi
+
+    mkdir -p "$script_directory"/.cmake_build/"$build_path"/bin
     pushd "$script_directory"/.cmake_build/"$build_path"
 
     CMAKE_FLAGS=("${@:3}")
 
     if [[ -n "$STATIC_ANALYSIS" ]]; then
         CMAKE_FLAGS+=("-DENABLE_STATIC_ANALYSIS=ON")
-    fi
-
-    if [[ -n "$CLEAN" || -n "$STATIC_ANALYSIS" ]]; then
-        cmake --build . --target clean
     fi
 
     cmake \
