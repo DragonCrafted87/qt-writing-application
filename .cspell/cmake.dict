@@ -3,9 +3,11 @@ AUTORCC
 AUTOUIC
 cmake
 CPPCHECK
-cppcheck
 fcolor
+fetchcontent
+GSL
 iwyu
+makeavailable
 Qunused
 suppr
 Wdocumentation
