@@ -1,0 +1,9 @@
+winbase
+wincon
+windef
+winerror
+wingdi
+winnetwk
+winreg
+winsvc
+winuser

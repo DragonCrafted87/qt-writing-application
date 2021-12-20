@@ -1,0 +1,16 @@
+AUTOMOC
+AUTORCC
+AUTOUIC
+cmake
+CPPCHECK
+cppcheck
+fcolor
+iwyu
+Qunused
+suppr
+Wdocumentation
+Werror
+Wextra
+Wpedantic
+Wsuggest
+Xiwyu

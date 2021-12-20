@@ -1,0 +1,53 @@
+{
+    "dictionaries": [
+        "en_US",
+        "bash",
+        "companies",
+        "cmake",
+        "cpp",
+        "fonts",
+        "main",
+        "misc",
+        "shell",
+        "static-analysis",
+        "qt",
+        "softwareTerms",
+        "windows"
+    ],
+    "dictionaryDefinitions": [
+        {
+            "addWords": true,
+            "name": "main",
+            "path": "./.cspell/main.dict"
+        },
+        {
+            "name": "qt",
+            "path": "./.cspell/qt.dict"
+        },
+        {
+            "name": "windows",
+            "path": "./.cspell/windows.dict"
+        },
+        {
+            "name": "cmake",
+            "path": "./.cspell/cmake.dict"
+        },
+        {
+            "name": "shell",
+            "path": "./.cspell/shell.dict"
+        },
+        {
+            "name": "static-analysis",
+            "path": "./.cspell/static-analysis.dict"
+        }
+    ],
+    "flagWords": [
+        "hte"
+    ],
+    "language": "en",
+    "minWordLength": 3,
+    "version": "0.2",
+    "words": [
+        "githubusercontent"
+    ]
+}
