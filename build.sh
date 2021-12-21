@@ -28,10 +28,14 @@ function configure-and-build ()
 
     if [[ -n "$STATIC_ANALYSIS" ]]; then
         CMAKE_FLAGS+=("-DENABLE_STATIC_ANALYSIS=ON")
+    else
+        CMAKE_FLAGS+=("-DENABLE_STATIC_ANALYSIS=OFF")
     fi
 
-    if [[ -n "$CLEAN" || -n "$STATIC_ANALYSIS" ]]; then
-        cmake --build . --target clean
+    if [[ -f "CMakeCache.txt" ]]; then
+        if [[ -n "$CLEAN" || -n "$STATIC_ANALYSIS" ]]; then
+            cmake --build . --target clean
+        fi
     fi
 
     cmake \

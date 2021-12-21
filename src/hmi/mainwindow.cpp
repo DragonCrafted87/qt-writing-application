@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget * parent) : QMainWindow(parent), ui(new Ui::MainW
 {
     ui->setupUi(this);
 
-    qDebug() << "Starting up" << APPLICATION_NAME << APPLICATION_VERSION;
+    qDebug().noquote() << "Starting up" << QCoreApplication::applicationName()
+                       << QCoreApplication::applicationVersion();
 
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::newDocument);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openDocument);

@@ -13,8 +13,8 @@ case "$OSTYPE" in
             python-pip \
             git \
             mingw-w64-clang-x86_64-boost\
-            mingw-w64-clang-x86_64-extra-cmake-modules \
             mingw-w64-clang-x86_64-cppcheck \
+            mingw-w64-clang-x86_64-extra-cmake-modules \
             mingw-w64-clang-x86_64-ninja \
             mingw-w64-clang-x86_64-qt6-debug \
             mingw-w64-clang-x86_64-qt6-static \

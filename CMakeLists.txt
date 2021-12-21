@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
+include(FetchContent)
+
 project("DragonCrafted87's Simple Writing Application" LANGUAGES C CXX)
 
 set(VERSION_MAJOR 0)
@@ -81,7 +83,15 @@ if(CMAKE_CXX_COMPILER_ID MATCHES Clang)
     list(APPEND CXX_FLAGS_RELEASE "-O3" "-Wno-unused")
 endif()
 
+# SECTION - Libraries
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
+
+fetchcontent_declare(
+    GSL
+    GIT_REPOSITORY "https://github.com/microsoft/GSL"
+    GIT_TAG "v3.1.0"
+)
+fetchcontent_makeavailable(GSL)
 
 # SECTION - Static Analyzers
 if(ENABLE_STATIC_ANALYSIS)
@@ -126,7 +136,7 @@ target_compile_options(
         "$<$<CONFIG:Release>:${CXX_FLAGS_RELEASE}>"
 )
 
-target_link_libraries(main PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(main PRIVATE GSL Qt${QT_VERSION_MAJOR}::Widgets)
 target_include_directories(main PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src)
 set_property(TARGET main PROPERTY WIN32_EXECUTABLE true)
 
